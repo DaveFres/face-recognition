@@ -39,6 +39,12 @@ class App extends Component {
         };
     }
 
+    componentDidMount() {
+        fetch('http://localhost:3000/')
+            .then(response => response.json())
+            .then(data => console.log(data));
+    }
+
     calculateFaceLocation = data => {
         const clarifaiFace =
             data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -86,7 +92,7 @@ class App extends Component {
             <div className="App">
                 <Particles className="particles" params={particlesOptions} />
                 <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
-                {route === 'home' 
+                {route === 'home'
                   ? <div>
                       <Logo />
                       <Rank />
@@ -97,11 +103,11 @@ class App extends Component {
                       <FaceRecognition box={box} imageUrl={imageUrl} />
                     </div>
                   : (
-                    route === 'signin' 
+                    route === 'signin'
                     ? <Signin onRouteChange={this.onRouteChange}/>
                     : <Register onRouteChange={this.onRouteChange}/>
                   )
-                } 
+                }
             </div>
         );
     }
