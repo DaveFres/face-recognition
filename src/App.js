@@ -35,7 +35,14 @@ class App extends Component {
             imageUrl: "",
             box: {},
             route: 'signin',
-            isSignedIn: false
+            isSignedIn: false,
+            user: {
+                email: '',
+                id: '',
+                name: '',
+                entries: 0,
+                joined: ''
+            }
         };
     }
 
@@ -43,6 +50,16 @@ class App extends Component {
         fetch('http://localhost:3000/')
             .then(response => response.json())
             .then(data => console.log(data));
+    }
+
+    loadUser = (data) => {
+        this.setState({user: {
+            email: data.id,
+            id: data.id,
+            name: data.name,
+            entries: data.entries,
+            joined: data.joined,
+        }})
     }
 
     calculateFaceLocation = data => {
@@ -95,7 +112,7 @@ class App extends Component {
                 {route === 'home'
                   ? <div>
                       <Logo />
-                      <Rank />
+                      <Rank name={this.state.user.name} entries={this.state.user.entries}/>
                       <ImageLinkForm
                           onInputChange={this.onInputChange}
                           onButtonSubmit={this.onButtonSubmit}
@@ -104,8 +121,8 @@ class App extends Component {
                     </div>
                   : (
                     route === 'signin'
-                    ? <Signin onRouteChange={this.onRouteChange}/>
-                    : <Register onRouteChange={this.onRouteChange}/>
+                    ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                    : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                   )
                 }
             </div>
