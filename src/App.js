@@ -46,12 +46,6 @@ class App extends Component {
         };
     }
 
-    componentDidMount() {
-        fetch('http://localhost:3000/')
-            .then(response => response.json())
-            .then(data => console.log(data));
-    }
-
     loadUser = (data) => {
         this.setState({user: {
             email: data.id,
